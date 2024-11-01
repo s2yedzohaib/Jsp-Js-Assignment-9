@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo List - Heavenly Design</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #b3ffab, #12fff7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            padding: 0 20px;
+        }
+
+        h1 {
+            color: #ffffff;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            backdrop-filter: blur(10px);
+        }
+
+        input[type="text"] {
+            width: calc(100% - 120px);
+            padding: 10px;
+            border-radius: 8px;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            margin-right: 10px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.8);
+        }
+
+        button {
+            background: #00c6ff;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        button:hover {
+            background: #0074f8;
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        button:active {
+            transform: translateY(0);
+        }
+
+        ul {
+            list-style-type: none;
+            margin-top: 20px;
+            padding: 0;
+        }
+
+        li {
+            background: rgba(255, 255, 255, 0.6);
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        li p {
+            margin: 0;
+            font-size: 1rem;
+        }
+
+        li button {
+            background: #ff4f4f;
+            padding: 8px 12px;
+            font-size: 0.9rem;
+            margin-left: 10px;
+        }
+
+        li button:nth-child(2) {
+            background: #ffd700;
+            color: #000;
+        }
+
+        @media (max-width: 500px) {
+            body {
+                padding: 0 10px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                width: 100%;
+            }
+
+            input[type="text"] {
+                width: calc(100% - 100px);
+                margin-right: 8px;
+            }
+
+            button {
+                padding: 8px 12px;
+                font-size: 0.9rem;
+            }
+
+            li p {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Todo List</h1>
+        <div class="controls">
+            <input type="text" id="Inp" placeholder="Enter your task...">
+            <button onclick="addTask()">Add</button>
+            <button onclick="deleteAll()">Delete All</button>
+        </div>
+        <ul id="list"></ul>
+    </div>
+
+    <script>
+        var listContainer = document.getElementById("list");
+        var inp = document.getElementById("Inp");
+
+        function addTask() {
+            if (inp.value) {
+                var li = document.createElement("li");
+
+                var ptext = document.createElement("p");
+                var text = document.createTextNode(inp.value);
+                ptext.appendChild(text);
+                li.appendChild(ptext);
+
+                // Delete Btn
+                var deBtn = document.createElement("button");
+                deBtn.setAttribute("onclick", "deletesingle(this)");
+                var delbtntext = document.createTextNode("Delete");
+                deBtn.appendChild(delbtntext);
+                li.appendChild(deBtn);
+
+                // Edit Btn
+                var edBtn = document.createElement("button");
+                edBtn.setAttribute("onclick", "editsingle(this)");
+                var editelbtntext = document.createTextNode("Edit");
+                edBtn.appendChild(editelbtntext);
+                li.appendChild(edBtn);
+
+                listContainer.appendChild(li);
+                inp.value = "";
+            }
+            else{
+                alert("Enter A Task")
+            }
+        }
+
+        function deletesingle(a) {
+            a.parentNode.remove();
+        }
+
+        function editsingle(a) {
+            var newa = prompt("Enter new task:");
+            if (newa) {
+                a.parentElement.firstChild.innerHTML = newa;
+            }
+        }
+
+        function deleteAll() {
+            listContainer.innerHTML = "";
+        }
+    </script>
+
+</body>
+</html>
